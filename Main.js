@@ -14,3 +14,10 @@ class Arco{
     this.destino = destino
   }
 }
+
+var nodos = new Array();
+
+function insertarNodo(nombre){
+  var pos = nodos.length;
+  document.write(pos);
+}
