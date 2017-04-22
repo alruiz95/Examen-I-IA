@@ -19,5 +19,20 @@ var nodos = new Array();
 
 function insertarNodo(nombre){
   var pos = nodos.length;
-  document.write(pos);
+  var nn;
+  nn = new Nodo(nombre);
+  nodos[pos] = nn;
 }
+
+function
+
+function 
+
+
+insertarNodo("A");
+insertarNodo("B");
+insertarNodo("C");
+insertarNodo("D");
+
+var pos = nodos.length;
+document.write(pos);
