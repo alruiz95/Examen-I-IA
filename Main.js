@@ -3,6 +3,8 @@
 var nodos = new Array();
 var letrasInsertar = new Array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
 
+//Estructura
+
 class Nodo {
   constructor(nombre) {
     this.nombre = nombre;
@@ -17,7 +19,7 @@ class Arco{
   }
 }
 
-
+//Funciones de Nodos
 
 function insertarNodo(nombre){
   if (buscar(nombre) != null){
@@ -79,6 +81,13 @@ function insercionAutomaticaNodos(cantidad){
 
 }
 
+
+//Busqueda en Grafos
+
+
+/*
+INSERTAR AQUI TODAS LAS FUNCIONES DE BUSQUEDA A IMPLEMENTAR
+*/
 
 insertarNodo("A");
 insertarNodo("B");
