@@ -2,7 +2,6 @@
 
 var nodos = new Array();
 var letrasInsertar = new Array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
-
 //Estructura
 
 class Nodo {
@@ -186,8 +185,60 @@ insertarNodo("D");
 */
 
 insercionAutomaticaNodos(2000);
+insertarNodoAbiertos("A");
 
 
 var pos = nodos.length;
 document.write(pos);
 imprimirNodos();
+
+
+
+
+var cerrados = new Array();
+var abiertos = new Array();
+/*function insertarNodoCerrados(lista){
+  var pos = cerrados.length;
+  cerrados[pos] = lista;
+}*/
+function insertarNodoAbiertos(nodoOrigen){
+  if (cerrados.length==null){
+    var posi = cerrados.length;
+    cerrados[posi] = nodoOrigen;//nodo.origen no se a creado, es el que el usuario selecciona para iniciar la busqueda
+  }
+  else{
+    var listaActual = Array;
+    listaActual = cerrados[cerrados.length-1];
+    var pos = abiertos.length;
+
+    abiertos[pos] = (listaActual + buscarH(listaActual)) ;
+    //var tamRuta;
+    //tamRuta= listaActual.costo+
+    document.write(abiertos);
+
+  }
+}   
+
+function buscarH (listaActual){
+  var ultNodoLista;
+  ultNodoLista = listaActual[listaActual.length-1];
+  for (i = 0; i < arcos.length; i++){
+    if(arcos[i].origen==ultNodoLista){
+      return arcos[i].destino.nombre;
+    }
+  }
+}
+
+
+
+
+function insertarAbiertos(nombre){
+  if (buscar(nombre) != null){
+    document.write("No se puede insertar el nodo: '"+nombre+"'' por que ya existe");
+  }
+ 
+}
+ 
+
+
+ 
