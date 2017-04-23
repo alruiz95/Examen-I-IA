@@ -113,6 +113,12 @@ function cambiarCostoArco(origen, destino, costo){
   }
 }
 
+//Poner Estado Inicial
+//Poner Estado Final
+//Eliminar nodo
+
+
+
 function insercionAutomaticaNodos(cantidad){
   //creacion de nodos
   
