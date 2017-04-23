@@ -98,6 +98,21 @@ function cambiarNombreNodo(nombreViejo,nombreNuevo){
   }*/
 }
 
+function cambiarCostoArco(origen, destino, costo){
+  var nodoOrigen = buscar(origen);
+  var nodoDestino = buscar(destino);
+  if ((nodoOrigen == null) || (nodoDestino == null)){
+    document.write("Error de Cambio Costo de Arco en:"+origen+" a "+destino+" -> No existe alguno de los nodos");
+    return;
+  }
+
+  for (var i = 0; i<nodoOrigen.arcos.length; i++){
+    if (nodoOrigen.arcos[i].nombre == nodoDestino){
+      nodoOrigen.arcos[i].costo = costo;
+    }
+  }
+}
+
 function insercionAutomaticaNodos(cantidad){
   //creacion de nodos
   
