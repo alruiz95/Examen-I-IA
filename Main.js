@@ -73,7 +73,7 @@ function insertarArco(peso, origen,destino){
   }
 
   if (existeArco()){
-    document.write("Error de Insercion de Arco:"+origen+" a "+destino+" -> Ya existe este arco");
+    document.write("Error de Insercion de Arco:"+origen+" a "+destino+" -> Ya existe.");
     return;
   }
 
@@ -81,6 +81,21 @@ function insertarArco(peso, origen,destino){
   na = new Arco(peso,nodoDestino);
   var pos = nodoOrigen.arcos.length;
   nodoOrigen.arcos[pos] = na;
+}
+
+function cambiarNombreNodo(nombreViejo,nombreNuevo){
+  var nodo = buscar(nombreViejo);
+  if (nodo){
+    document.write("No se puede insertar el nodo: '"+nombre+"' por que ya existe");
+  }
+  nodo.nombre=nombreNuevo;
+  /*for (var i = 0 ; i< nodos.length; i++){
+    for (var x = 0; x < nodos[i].arcos.length; x++){
+      if (nodos[i].arcos[x].nodoDestino.nombre == nombreViejo){
+        nodos[i].arcos[x].nodoDestino.nombre = 
+      }
+    }
+  }*/
 }
 
 function insercionAutomaticaNodos(cantidad){
