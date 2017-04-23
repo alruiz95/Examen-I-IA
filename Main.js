@@ -68,12 +68,12 @@ function insertarArco(peso, origen,destino){
   var nodoOrigen = buscar(origen);
   var nodoDestino = buscar(destino);
   if ((nodoOrigen == null) || (nodoDestino == null)){
-    document.write("Error de Insercion de Arco:"+origen+" a "+destino=" -> No existe alguno de los nodos");
+    document.write("Error de Insercion de Arco:"+origen+" a "+destino+" -> No existe alguno de los nodos");
     return;
   }
 
-  if existeArco(){
-    document.write("Error de Insercion de Arco:"+origen+" a "+destino=" -> Ya existe este arco");
+  if (existeArco()){
+    document.write("Error de Insercion de Arco:"+origen+" a "+destino+" -> Ya existe este arco");
     return;
   }
 
