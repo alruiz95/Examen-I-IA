@@ -215,7 +215,7 @@ function insertarNodoAbiertos(nodoOrigen){
       var arcDestino = buscarH(listaActual);
       var sumatoria = listaActual.distancia+arcDestino.distancia;
       listaActual = listaActual +arcDestino.nombre;
-      abiertos[pos] = (listaActual+sumatoria)) ;
+      abiertos[pos] = (listaActual+sumatoria) ;
       abiertos[sumatoria].sort();
       cerrados[cerrados.length-1] = abiertos[0];
       abiertos[0].remove();
