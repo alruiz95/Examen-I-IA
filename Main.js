@@ -202,21 +202,27 @@ var abiertos = new Array();
   cerrados[pos] = lista;
 }*/
 function insertarNodoAbiertos(nodoOrigen){
-  if (cerrados.length==null){
-    var posi = cerrados.length;
-    cerrados[posi] = nodoOrigen;//nodo.origen no se a creado, es el que el usuario selecciona para iniciar la busqueda
-  }
-  else{
-    var listaActual = Array;
-    listaActual = cerrados[cerrados.length-1];
-    var pos = abiertos.length;
+  while(listaActual[listaActual.length-1]==nodoDestino.nombre){
+    if (cerrados.length==null){
+      var posi = cerrados.length;
+      cerrados[posi] = nodoOrigen;//nodo.origen no se a creado, es el que el usuario selecciona para iniciar la busqueda
+    }
+    else{
+      var listaActual = Array;
+      listaActual = cerrados[cerrados.length-1];
+      var pos = abiertos.length;
 
-    abiertos[pos] = (listaActual + buscarH(listaActual)) ;
-    //var tamRuta;
-    //tamRuta= listaActual.costo+
-    document.write(abiertos);
+      var arcDestino = buscarH(listaActual);
+      var sumatoria = listaActual.distancia+arcDestino.distancia;
+      abiertos[pos] = (listaActual + arcDestino.nombre+sumatoria)) ;
+      abiertos[sumatoria].sort();
+      cerrados[cerrados.length-1] = abiertos[0];
+      abiertos[0].remove();
+      document.write(abiertos); 
 
+    }
   }
+  
 }   
 
 function buscarH (listaActual){
@@ -224,7 +230,7 @@ function buscarH (listaActual){
   ultNodoLista = listaActual[listaActual.length-1];
   for (i = 0; i < arcos.length; i++){
     if(arcos[i].origen==ultNodoLista){
-      return arcos[i].destino.nombre;
+      return arcos[i].destino;
     }
   }
 }
