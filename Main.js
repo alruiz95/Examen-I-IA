@@ -9,6 +9,7 @@ class Nodo {
   constructor(nombre) {
     this.nombre = nombre;
     this.arcos =  new Array();
+    this.estado = null; // F = Final - I = Inicial  - null = none
   }
 }
 
@@ -43,6 +44,16 @@ function buscar (nombre){
   for (i = 0; i < nodos.length; i++){
     if (nodos[i].nombre == nombre){
       return nodos[i];
+    }
+  }
+  return null;
+}
+
+function buscarPos (nombre){
+  var i;
+  for (i = 0; i < nodos.length; i++){
+    if (nodos[i].nombre == nombre){
+      return i;
     }
   }
   return null;
@@ -85,17 +96,10 @@ function insertarArco(peso, origen,destino){
 
 function cambiarNombreNodo(nombreViejo,nombreNuevo){
   var nodo = buscar(nombreViejo);
-  if (nodo){
-    document.write("No se puede insertar el nodo: '"+nombre+"' por que ya existe");
+  if (nodo==null){
+    document.write("No se puede Cambiar el nodo: '"+nombreViejo+"' por que NO existe");
   }
   nodo.nombre=nombreNuevo;
-  /*for (var i = 0 ; i< nodos.length; i++){
-    for (var x = 0; x < nodos[i].arcos.length; x++){
-      if (nodos[i].arcos[x].nodoDestino.nombre == nombreViejo){
-        nodos[i].arcos[x].nodoDestino.nombre = 
-      }
-    }
-  }*/
 }
 
 function cambiarCostoArco(origen, destino, costo){
@@ -107,7 +111,7 @@ function cambiarCostoArco(origen, destino, costo){
   }
 
   for (var i = 0; i<nodoOrigen.arcos.length; i++){
-    if (nodoOrigen.arcos[i].nombre == nodoDestino){
+    if (nodoOrigen.arcos[i].destino.nombre == nodoDestino.nombre){
       nodoOrigen.arcos[i].costo = costo;
     }
   }
@@ -155,17 +159,37 @@ function insercionAutomaticaNodos(cantidad){
 
       insertarNodo(nombre);
 
-
       contadores[lastCont-1] ++;
   }
 
+  
+
+  for (var i = 0; i < nodos.length; i++) {
+    var nodosCant = nodos.length;
+    var div2 = nodosCant/2;
+    
+    var cantArcos = getRandomInt(div2,nodosCant-1);
+
+    for (var x = 0; x < cantArcos; x++) {
+
+      var nodoNPos = getRandomInt(0, nodos.length-1);
+      while (nodoNPos == i){
+        nodoNPos = getRandomInt(0, nodos.length-1);
+      }
+      var costo = getRandomInt(1,500)
+      insertarArco(costo,nodos[i].nombre,nodos[nodoNPos].nombre);
+    }
+  }
 }
 
 function imprimirNodos(){
   document.write("Imprimir: <br>");
   var i;
   for (i = 0; i < nodos.length; i++){
-    document.write(nodos[i].nombre+"<br>");
+    document.write("====== "+nodos[i].nombre+" ======<br>");
+    for (var x = 0; x < nodos[i].arcos.length; x++){
+      document.write("--> "+nodos[i].arcos[x].destino.nombre+"<br> --->Costo: "+nodos[i].arcos[x].costo+"<br>");
+    }
   }
 }
 
@@ -177,17 +201,22 @@ function imprimirNodos(){
 INSERTAR AQUI TODAS LAS FUNCIONES DE BUSQUEDA A IMPLEMENTAR
 */
 
-/*
+
 insertarNodo("A");
 insertarNodo("B");
 insertarNodo("C");
-insertarArco(10,"C","A");
+insertarArco(30,"C","A");
 insertarNodo("D");
-*/
 
-insercionAutomaticaNodos(2000);
-
-
-var pos = nodos.length;
-document.write(pos);
 imprimirNodos();
+
+//cambiarNombreNodo("A","Cambio");
+cambiarCostoArco("C","A",20);
+
+imprimirNodos();
+//insercionAutomaticaNodos(10);
+
+
+
+document.write(nodos.length);
+
