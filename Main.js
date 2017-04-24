@@ -9,6 +9,7 @@ class Nodo {
     this.nombre = nombre;
     this.arcos =  new Array();
     this.estado = null; // F = Final - I = Inicial  - null = none
+    this.visitado = false;
   }
 }
 
@@ -43,16 +44,6 @@ function buscar (nombre){
   for (i = 0; i < nodos.length; i++){
     if (nodos[i].nombre == nombre){
       return nodos[i];
-    }
-  }
-  return null;
-}
-
-function buscarPos (nombre){
-  var i;
-  for (i = 0; i < nodos.length; i++){
-    if (nodos[i].nombre == nombre){
-      return i;
     }
   }
   return null;
@@ -201,41 +192,63 @@ INSERTAR AQUI TODAS LAS FUNCIONES DE BUSQUEDA A IMPLEMENTAR
 */
 
 
-insertarNodo("A");
+function DFS(nodoInicial,nodoFinal){
+  var nodoI = buscar(nodoInicial);
+  var nodoF = buscar(nodoFinal);
+  if ((nodoI == null) || (nodoF == null)){
+    document.write("Error: -> No existe alguno de los nodos");
+    return;
+  }
+
+  var Stack = [];
+  Stack.push(nodoI);
+  var nodoAnt=nodoI;
+  nodoI.visitado=true;
+
+  while(true){
+    var nodoActual = Stack.pop();
+    Stack.push(nodoActual);
+    if (nodoActual.nombre == nodoF.nombre){
+      return Stack;
+    }
+
+    var i = 0;
+    for(i; i<nodoActual.arcos.length; i++){
+      nodoActual
+    }
+
+  }
+
+}
+
+
+
+insercionAutomaticaNodos(10);
+/*insertarNodo("A");
 insertarNodo("B");
 insertarNodo("C");
 insertarArco(30,"C","A");
 insertarNodo("D");
 
-<<<<<<< HEAD
 imprimirNodos();
-=======
-insercionAutomaticaNodos(2000);
-insertarNodoAbiertos("A");
->>>>>>> origin/master
-
 //cambiarNombreNodo("A","Cambio");
-cambiarCostoArco("C","A",20);
-
+cambiarCostoArco("C","A",20);*/
 imprimirNodos();
-<<<<<<< HEAD
-//insercionAutomaticaNodos(10);
 
-
+//insertarNodoAbiertos("A");
 
 document.write(nodos.length);
 
-=======
 
 
+/*
 
 
-var cerrados = new Array();
-var abiertos = new Array();
 /*function insertarNodoCerrados(lista){
   var pos = cerrados.length;
   cerrados[pos] = lista;
-}*/
+}
+
 function insertarNodoAbiertos(nodoOrigen){
   while(listaActual[listaActual.length-1]==nodoDestino.nombre){
     if (cerrados.length==null){
@@ -272,16 +285,10 @@ function buscarH (listaActual){
 }
 
 
-
-
 function insertarAbiertos(nombre){
   if (buscar(nombre) != null){
     document.write("No se puede insertar el nodo: '"+nombre+"'' por que ya existe");
   }
  
 }
- 
-
-
- 
->>>>>>> origin/master
+*/
