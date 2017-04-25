@@ -277,29 +277,35 @@ imprimirNodos();
 document.write(nodos.length);
 imprimirStack(DFS("A","J"));
 
+astar("A","J");
 
 // busqueda de a*
 function astar(nodoInicial,nodoFinal){
   var cerrados = new Array();
   var abiertos = new Array();
   var listaActual = new Array();
+  listaActual=nodoInicial;
   while(listaActual[listaActual.length-1]!=nodoFinal.nombre){
-    if (cerrados.length==null){
+    if (cerrados.length==0){
       var posi = cerrados.length;
       cerrados[posi] = nodoInicial;
     }
     else{
       listaActual = cerrados[cerrados.length-1];
+      //document.write(listaActual);
       var pos = abiertos.length;
 
       var arcDestino = buscarH(listaActual);
+
+     // document.write(buscarH(listaActual));
+
       var sumatoria = ((listaActual.costo)+(arcDestino.costo)+(arcDestino.euristica)-(arcDestino.origen.euristica));
       listaActual = listaActual + arcDestino.nombre;
       abiertos[pos] = (listaActual + sumatoria) ;
       abiertos[sumatoria].sort();
       cerrados[cerrados.length-1] = abiertos[0];
       abiertos[0].remove();
-      document.write(abiertos); 
+      document.write(nodoInicial); 
     }
   }
   
@@ -311,11 +317,13 @@ function buscarH (listaActual){
   for (i = 0; i < arcos.length; i++){
     if(arcos[i].origen==ultNodoLista){
       return arcos[i].destino;
+
+      document.write(arcos.origen);
     }
   }
 }
 
-
+/*
 function BFS(nodoInicial, nodoFinal){
   var cerrados = new Array();
   var abiertos = new Array();
@@ -336,8 +344,8 @@ function BFS(nodoInicial, nodoFinal){
       abiertos[sumatoria].sort();
       cerrados[cerrados.length-1] = abiertos[0];
       abiertos[0].remove();
-      document.write(abiertos); 
+      document.write("veame"); 
     }
   }
   
-}  
+}  */
