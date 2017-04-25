@@ -1,0 +1,80 @@
+<div>
+	<div class="form-inline">
+	  <div class="form-group">
+	    <a href="#" id="importar-json" onclick="">Importar JSON</a>
+	  </div>
+	 	<a href="#" id="exportar-json" onclick="exportarJSON('exportar-json');">Exportar JSON</a>
+	 </div>
+	<h2>Bidirectional Search</h2> 
+	<br/>
+	<div class="form-inline">
+	  <div class="form-group">
+	    <p class="form-control-static">Cantidad de Nodos:</p>
+	  </div>
+	  <div class="form-group mx-sm-3">
+	    <input type="number" class="form-control" id="cantidadNodos" placeholder="25" value="25"/>
+	  </div>
+	  <button class="btn btn-primary" onclick="modificarCantNodos(parseInt(document.getElementById('cantidadNodos').value));">Actualizar</button>
+	</div>
+	<br/>
+	<div class="form-inline">
+	  <div class="form-group">
+	    <p class="form-control-static">Nodo Inicial:</p>
+	  </div>
+	  <div class="form-group mx-sm-3">
+	    <select id="listaNodosIniciales" name="nodes">
+		</select>
+	  </div>
+	  <button class="btn btn-primary" onclick="llenarNodosIniciales('listaNodosIniciales');">Actualizar</button>
+	  <button class="btn btn-success" 
+	  	onclick="modificarNodoInicial('inicial');">Inicial</button>
+	 </div>
+	 <br/>
+	<div class="form-inline">
+	  <div class="form-group">
+	    <p class="form-control-static">Nodo Final:</p>
+	  </div>
+	  <div class="form-group mx-sm-3">
+	    <select id="listaNodosFinales" name="nodes">
+		</select>
+	  </div>
+	  <button class="btn btn-primary" onclick="llenarNodosFinales('listaNodosFinales');">Actualizar</button>
+	  <button class="btn btn-success" 
+	  	onclick="modificarNodoFinal('final');">Final</button>
+	 </div>
+	 <br/>
+	<div class="form-inline">
+	  <div class="form-group">
+	    <p class="form-control-static">Tiene solución?:</p>
+	  </div>
+	  <div class="form-group mx-sm-3">
+	    <input disabled="disabled" type="text" class="form-control" id="solucion" placeholder="NA" value=""/>
+	  </div>
+	  <button class="btn btn-success" onclick="">Ejecutar Búsqueda</button>
+	 </div>
+	 <br/>
+	<div class="form-inline">
+	  <div class="form-group">
+	    <p class="form-control-static">Complejidad temporal:</p>
+	  </div>
+	  <div class="form-group mx-sm-3">
+	    <input disabled="disabled" type="text" class="form-control" id="cTemporal" placeholder="NA" value=""/>
+	  </div>
+	 </div>
+	 <br/>
+	<div class="form-inline">
+	  <div class="form-group">
+	    <p class="form-control-static">Complejidad espacial:</p>
+	  </div>
+	  <div class="form-group mx-sm-3">
+	    <input disabled="disabled" type="text" class="form-control" id="cEspacial" placeholder="NA" value=""/>
+	  </div>
+	 </div>
+	 <!-- <br/>
+	<div class="form-inline">
+	  <div class="form-group">
+	    <button class="btn btn-warning" onclick="">Importar JSON</button>
+	  </div>
+	  <button class="btn btn-danger" onclick="">Exportar JSON</button>
+	 </div> -->
+</div>
