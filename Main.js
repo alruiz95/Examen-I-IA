@@ -218,7 +218,14 @@ function DFS(nodoInicial,nodoFinal){
 
   while(true){
     var nodoActual = Stack.pop();
+
+    if (nodoActual == null){
+      document.write("Error: -> No se encontro un resultado");
+      return null;
+    }
     Stack.push(nodoActual);
+
+
     if (nodoActual.nombre == nodoF.nombre){
       return Stack;
     }
@@ -226,7 +233,7 @@ function DFS(nodoInicial,nodoFinal){
       document.write("Error: -> No se encontro un resultado");
       return null;
     }
-    primerDo=false;
+    
 
     var i = 0;
     for(i; i<nodoActual.arcos.length; i++){
@@ -244,6 +251,7 @@ function DFS(nodoInicial,nodoFinal){
       Stack.push(nodoAnt);
       nodoAnt = ant2;
     }
+    primerDo=false;
   }
 
 }
@@ -267,7 +275,7 @@ imprimirNodos();
 //insertarNodoAbiertos("A");
 
 document.write(nodos.length);
-imprimirStack(DFS("A","D"));
+imprimirStack(DFS("A","J"));
 
 
 
