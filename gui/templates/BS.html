@@ -1,8 +1,8 @@
 <div>
-	<div class="form-inline">
-	  <div class="form-group">
-	    <a href="#" id="importar-json" onclick="">Importar JSON</a>
-	  </div>
+	<div class="form-inline" style="margin-left: 465px">
+		<div class="form-group">
+			<input type="file" id="files" name="file"/>
+		</div>
 	 	<a href="#" id="exportar-json" onclick="exportarJSON('exportar-json');">Exportar JSON</a>
 	 </div>
 	<h2>Bidirectional Search</h2> 
@@ -48,7 +48,7 @@
 	    <p class="form-control-static">Tiene solución?:</p>
 	  </div>
 	  <div class="form-group mx-sm-3">
-	    <input disabled="disabled" type="text" class="form-control" id="solucion" placeholder="NA" value=""/>
+	    <input type="text" class="form-control" id="solucion" placeholder="NA" value=""/>
 	  </div>
 	  <button class="btn btn-success" onclick="">Ejecutar Búsqueda</button>
 	 </div>

@@ -10,6 +10,8 @@ var seed = 2;
 
 
 var nodos = new Array();
+var listaCerrados = new Array();
+var listaAbiertos = new Array();
 
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
@@ -65,6 +67,21 @@ function existeArco(origen,destino){
 
   return false;
 
+}
+
+function costoArco(origen,destino){
+  var nodoOrigen = buscar(origen);
+  if (nodoOrigen == null){
+    return 0;
+  }
+
+  for (var i = 0; i<nodoOrigen.arcos.length; i++){
+    if (nodoOrigen.arcos[i].destino.nombre == destino){
+      return nodoOrigen.arcos[i].costo;
+    }
+  }
+
+  return 0;
 }
 
 function insertarArco(peso, origen,destino){
@@ -218,23 +235,183 @@ function llenarNodosFinales(ESTRUCTURA){
   }
 }
 
-// function importarJSON(evt, ESTRUCTURA) {
-//     var files = evt.target.files; // FileList object
+function readBlob(opt_startByte, opt_stopByte) {
 
-//     // files is a FileList of File objects. List some properties.
-//     var output = [];
-//     for (var i = 0, f; f = files[i]; i++) {
-//       output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-//                   f.size, ' bytes, last modified: ',
-//                   f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-//                   '</li>');
-//     }
-//     document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
-//   }
+    var files = document.getElementById('files').files;
+    if (!files.length) {
+      alert('Please select a file!');
+      return;
+    }
 
-//   document.getElementById('files').addEventListener('change', handleFileSelect, false);
+    var file = files[0];
+    var start = parseInt(opt_startByte) || 0;
+    var stop = parseInt(opt_stopByte) || file.size - 1;
+
+    var reader = new FileReader();
+
+    // If we use onloadend, we need to check the readyState.
+    reader.onloadend = function(evt) {
+      if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+        document.getElementById('byte_content').textContent = evt.target.result;
+        document.getElementById('byte_range').textContent = 
+            ['Read bytes: ', start + 1, ' - ', stop + 1,
+             ' of ', file.size, ' byte file'].join('');
+      }
+    };
+
+    var blob = file.slice(start, stop + 1);
+    reader.readAsBinaryString(blob);
+  }
+  
+  // document.querySelector('.readBytesButtons').addEventListener('click', function(evt) {
+  //   if (evt.target.tagName.toLowerCase() == 'button') {
+  //     var startByte = evt.target.getAttribute('data-startbyte');
+  //     var endByte = evt.target.getAttribute('data-endbyte');
+  //     readBlob(startByte, endByte);
+  //   }
+  // }, false);
 
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+function compare(lista1,lista2) {
+  var costo1 = 0;
+  for (var i = 0; i<lista1.length; i++){
+    if(lista1[i+1]!= null){
+      costo1 += costoArco(lista1[i].nombre,lista1[i+1].nombre);
+    }
+  }
+
+  var costo2 = 0;
+  for (var i = 0; i<lista2.length; i++){
+    if(lista2[i+1]!= null){
+      costo2 += costoArco(lista2[i].nombre,lista2[i+1].nombre);
+    }
+  }
+
+  if (costo1 < costo2)
+    return -1;
+  if (costo1 > costo2)
+    return 1;
+  return 0;
+}
+
+function exiteEnCerrados(nodo){
+  for (var i = 0; i < listaCerrados.length; i++) {
+    if (listaCerrados[i].nombre == nodo.nombre){
+      return true;
+    }
+  }
+  return false;
+}
+
+function insertarCerrados(nodo){
+  for (var i = 0; i < listaCerrados.length; i++) {
+    if (listaCerrados[i].nombre == nodo.nombre){
+      return null;
+    }
+  }
+  listaCerrados.push(nodo);
+}
+
+function insertarAbiertos(lista){
+  var pos = listaAbiertos.length;
+  listaAbiertos[pos] = lista;
+}
+
+function ultimoListaAbiertos(){
+  var count = listaAbiertos[0].length;
+  return listaAbiertos[0][count-1];
+}
+
+function costoUniforme(rais, goal){
+  listaCerrados = new Array();
+  listaAbiertos = new Array();
+
+  var nodoIni = buscar(rais);
+  insertarCerrados(nodoIni);
+
+  var listaAnterior = new Array();
+  listaAnterior[0] = nodoIni;
+
+  while(true){
+
+    if (listaCerrados.length > nodos.length){
+      console.log("No se pudo encontrar");
+      return null;
+    }
+    
+
+    var lastCPos = (listaCerrados.length)-1;
+    var lastNC = listaCerrados[lastCPos];
+
+    var lastPosAnt = listaAnterior.length;
+
+    for (var i = 0; i<lastNC.arcos.length; i++){
+      var listaAins = listaAnterior.slice();
+      listaAins[lastPosAnt] = lastNC.arcos[i].destino;
+      insertarAbiertos(listaAins);
+    }
+    
+    for (var i = 0; i<listaAbiertos.length; i++){
+      var count = listaAbiertos[i].length;
+      var comp = listaAbiertos[i][count-1];
+      if (exiteEnCerrados(comp)){
+        listaAbiertos.splice(i,1);
+      }
+    }
+
+    listaAbiertos.sort(compare);
+    //imprimirCerrados();
+    //imprimirAbiertos();
+    var ultA = ultimoListaAbiertos();
+
+    for (var i = 0; i<listaAbiertos.length; i++){
+      var count = listaAbiertos[i].length;
+      var comp = listaAbiertos[i][count-1];
+      if (exiteEnCerrados(comp)){
+        listaAbiertos.splice(i,1);
+      }
+    }
+    
+    while (exiteEnCerrados(ultA.nombre)){
+      listaAbiertos.splice(0,1);
+      ultA = ultimoListaAbiertos();
+    }
+
+    insertarCerrados(ultA);
+    listaAnterior = listaAbiertos[0];
+    if(ultA.nombre == goal){
+      return listaAbiertos[0];
+    }
+    listaAbiertos.splice(0,1);
+  }
+}
+
+function imprimirCostoUni(LISTA, ESTRUCTURA){
+  var struct = document.getElementById(ESTRUCTURA);
+  var result = "";
+
+  if (LISTA==null){
+    return;
+  }
+  for (var i = 0; i < LISTA.length; i++) {
+    result = result + (LISTA[i].nombre + ",");
+  }
+  struct.value = result;
+}
+
+function ucsAUX(ORIGEN, DESTINO, ESTRUCTURA){
+  var origen = document.getElementById(ORIGEN);
+  var nOrigen = origen.options[origen.selectedIndex].value;
+
+  var destino = document.getElementById(DESTINO);
+  var nDestino = destino.options[destino.selectedIndex].value;
+
+   imprimirCostoUni(costoUniforme(nOrigen, nDestino), ESTRUCTURA);
+} 
+
+
+
 function dlimitedsAUX(ORIGEN, DESTINO, ESTRUCTURA){
   var origen = document.getElementById(ORIGEN);
   var nOrigen = origen.options[origen.selectedIndex].value;
