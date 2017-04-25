@@ -702,7 +702,42 @@ function costo(nodoInicial, nodoFinal){
   }
   
 }  */
-
+bfs("A","H");
 function bfs(nodoInicial,nodoFinal){
+
+  var cerrados = new Array();
+  var abiertos = new Array();
+  var listaActual = new Array();
+  listaActual = nodoInicial;
+  while(listaActual[listaActual.length-1]!=nodoFinal.nombre){
+    if (cerrados.length==0){
+      var posi = cerrados.length;
+      cerrados[posi] = nodoInicial;
+    }
+    else{
+      listaActual = cerrados[cerrados.length-1];
+      var pos = abiertos.length;
+      var arcDestino = buscarH(listaActual);
+      abiertos[pos] = arcDestino;
+
+      abiertos.sort(compare);
+
+      cerrados[cerrados.length-1] = abiertos[0];
+      abiertos[0].remove();
+      document.write(abiertos);
+      document.write(cerrados);
+      document.write("hola");
+    }
+  }
   
+}   
+
+function buscarH (listaActual){
+  
+  for (var i = 0 ; i < nodos.length ; i++){
+    if(nodos.arcos[i].origen==listaActual){
+      return nodos[i];
+    }
+  }
+  return null;
 }
