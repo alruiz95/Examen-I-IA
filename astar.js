@@ -1,3 +1,11 @@
+$.getScript("Main.js", function(data, textStatus, jqxhr) {
+  console.log(data); //data returned
+  console.log(textStatus); //success
+  console.log(jqxhr.status); //200
+  console.log('Load was performed.');
+});
+no
+
 var cerrados = new Array();
 var abiertos = new Array();
 /*function insertarNodoCerrados(lista){
@@ -5,13 +13,13 @@ var abiertos = new Array();
   cerrados[pos] = lista;
 }*/
 function insertarNodoAbiertos(nodoOrigen){
-  while(listaActual[listaActual.length-1]==nodoDestino.nombre){
+  var listaActual = new Array();
+  while(listaActual[listaActual.length-1]!=nodoDestino.nombre){
     if (cerrados.length==null){
       var posi = cerrados.length;
       cerrados[posi] = nodoOrigen;//nodo.origen no se a creado, es el que el usuario selecciona para iniciar la busqueda
     }
     else{
-      var listaActual = Array;
       listaActual = cerrados[cerrados.length-1];
       var pos = abiertos.length;
 
