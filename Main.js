@@ -70,18 +70,19 @@ function insertarArco(peso, origen,destino){
   var nodoDestino = buscar(destino);
   if ((nodoOrigen == null) || (nodoDestino == null)){
     document.write("Error de Insercion de Arco:"+origen+" a "+destino+" -> No existe alguno de los nodos");
-    return;
+    return false;
   }
 
-  if (existeArco()){
+  if (existeArco(origen,destino)){
     document.write("Error de Insercion de Arco:"+origen+" a "+destino+" -> Ya existe.");
-    return;
+    return false;
   }
 
   var na;
   na = new Arco(peso,nodoDestino);
   var pos = nodoOrigen.arcos.length;
   nodoOrigen.arcos[pos] = na;
+  return true;
 }
 
 function cambiarNombreNodo(nombreViejo,nombreNuevo){
@@ -162,12 +163,13 @@ function insercionAutomaticaNodos(cantidad){
 
     for (var x = 0; x < cantArcos; x++) {
 
-      var nodoNPos = getRandomInt(0, nodos.length-1);
-      while (nodoNPos == i){
-        nodoNPos = getRandomInt(0, nodos.length-1);
-      }
-      var costo = getRandomInt(1,500)
-      insertarArco(costo,nodos[i].nombre,nodos[nodoNPos].nombre);
+      do{
+        var nodoNPos = getRandomInt(0, nodos.length-1);
+        while (nodoNPos == i){
+          nodoNPos = getRandomInt(0, nodos.length-1);
+        }
+        var costo = getRandomInt(1,500)
+      }while(insertarArco(costo,nodos[i].nombre,nodos[nodoNPos].nombre)==false);
     }
   }
 }
@@ -181,6 +183,14 @@ function imprimirNodos(){
       document.write("--> "+nodos[i].arcos[x].destino.nombre+"<br> --->Costo: "+nodos[i].arcos[x].costo+"<br>");
     }
   }
+}
+
+function imprimirStack(stack){
+  stack.reverse();
+  while(stack.length>0){
+    document.write(stack.pop().nombre+",")
+  }
+  document.write("<br>");
 }
 
 
@@ -204,6 +214,7 @@ function DFS(nodoInicial,nodoFinal){
   Stack.push(nodoI);
   var nodoAnt=nodoI;
   nodoI.visitado=true;
+  var primerDo = true
 
   while(true){
     var nodoActual = Stack.pop();
@@ -211,15 +222,33 @@ function DFS(nodoInicial,nodoFinal){
     if (nodoActual.nombre == nodoF.nombre){
       return Stack;
     }
+    if ((nodoActual.nombre == nodoI.nombre) && (primerDo == false)) {
+      document.write("Error: -> No se encontro un resultado");
+      return null;
+    }
+    primerDo=false;
 
     var i = 0;
     for(i; i<nodoActual.arcos.length; i++){
-      nodoActual
+      if (nodoActual.arcos[i].destino.visitado == false ){
+        nodoActual.arcos[i].destino.visitado = true;
+        Stack.push(nodoActual.arcos[i].destino);
+        nodoAnt = nodoActual;
+        break;
+      }
     }
-
+    if(i>=nodoActual.arcos.length){
+      Stack.pop();
+      var ant2 = Stack.pop();
+      Stack.push(ant2);
+      Stack.push(nodoAnt);
+      nodoAnt = ant2;
+    }
   }
 
 }
+
+
 
 
 
@@ -238,6 +267,7 @@ imprimirNodos();
 //insertarNodoAbiertos("A");
 
 document.write(nodos.length);
+imprimirStack(DFS("A","D"));
 
 
 
