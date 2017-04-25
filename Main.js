@@ -56,7 +56,7 @@ function existeArco(origen,destino){
   }
 
   for (var i = 0; i<nodoOrigen.arcos.length; i++){
-    if (nodoOrigen.arcos[i].nombre == destino){
+    if (nodoOrigen.arcos[i].destino.nombre == destino){
       return true;
     }
   }
@@ -164,9 +164,9 @@ function insercionAutomaticaNodos(cantidad){
     for (var x = 0; x < cantArcos; x++) {
 
       do{
-        var nodoNPos = getRandomInt(0, nodos.length-1);
+        var nodoNPos = getRandomInt(0, nodos.length);
         while (nodoNPos == i){
-          nodoNPos = getRandomInt(0, nodos.length-1);
+          nodoNPos = getRandomInt(0, nodos.length);
         }
         var costo = getRandomInt(1,500)
       }while(insertarArco(costo,nodos[i].nombre,nodos[nodoNPos].nombre)==false);
