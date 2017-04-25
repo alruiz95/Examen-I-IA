@@ -66,6 +66,21 @@ function existeArco(origen,destino){
 
 }
 
+function costoArco(origen,destino){
+  var nodoOrigen = buscar(origen);
+  if (nodoOrigen == null){
+    return 0;
+  }
+
+  for (var i = 0; i<nodoOrigen.arcos.length; i++){
+    if (nodoOrigen.arcos[i].destino.nombre == destino){
+      return nodoOrigen.arcos[i].costo;
+    }
+  }
+
+  return 0;
+}
+
 function insertarArco(peso, origen,destino){
   var nodoOrigen = buscar(origen);
   var nodoDestino = buscar(destino);
@@ -391,9 +406,156 @@ function dlimiteds( rais, goal,limitacion){
   return stack;
 }
 
+var listaCerrados = new Array();
+var listaAbiertos = new Array();
+
+function compare(lista1,lista2) {
+  var costo1 = 0;
+  for (var i = 0; i<lista1.length; i++){
+    if(lista1[i+1]!= null){
+      costo1 += costoArco(lista1[i].nombre,lista1[i+1].nombre);
+    }
+  }
+
+  var costo2 = 0;
+  for (var i = 0; i<lista2.length; i++){
+    if(lista2[i+1]!= null){
+      costo2 += costoArco(lista2[i].nombre,lista2[i+1].nombre);
+    }
+  }
+
+  if (costo1 < costo2)
+    return -1;
+  if (costo1 > costo2)
+    return 1;
+  return 0;
+}
+
+function exiteEnCerrados(nodo){
+  for (var i = 0; i < listaCerrados.length; i++) {
+    if (listaCerrados[i].nombre == nodo.nombre){
+      return true;
+    }
+  }
+  return false;
+}
+
+function insertarCerrados(nodo){
+  for (var i = 0; i < listaCerrados.length; i++) {
+    if (listaCerrados[i].nombre == nodo.nombre){
+      return null;
+    }
+  }
+  listaCerrados.push(nodo);
+}
+
+function insertarAbiertos(lista){
+  var pos = listaAbiertos.length;
+  listaAbiertos[pos] = lista;
+}
+
+function ultimoListaAbiertos(){
+  var count = listaAbiertos[0].length;
+  return listaAbiertos[0][count-1];
+}
 
 
-insercionAutomaticaNodos(10);
+function imprimirAbiertos(){
+  document.write("[");
+  for (var i = 0; i < listaAbiertos.length; i++) {
+    document.write("[");
+    for (var x = 0; x < listaAbiertos[i].length; x++){
+      document.write(listaAbiertos[i][x].nombre+ ",");
+    }
+    document.write("],");
+  }
+  document.write("]<br>=====<br>");
+}
+function imprimirCerrados(){
+  document.write("Cerrados: ");
+  for (var i = 0; i < listaCerrados.length; i++) {
+    document.write( listaCerrados[i].nombre+ ", " );
+  }
+  document.write("<br>");
+}
+
+function costoUniforme(rais, goal){
+  listaCerrados = new Array();
+  listaAbiertos = new Array();
+
+  var nodoIni = buscar(rais);
+  insertarCerrados(nodoIni);
+
+  var listaAnterior = new Array();
+  listaAnterior[0] = nodoIni;
+
+  while(true){
+
+    if (listaCerrados.length > nodos.length){
+      document.write("no se pudo encontrar");
+      return null;
+    }
+    
+
+    var lastCPos = (listaCerrados.length)-1;
+    var lastNC = listaCerrados[lastCPos];
+
+    var lastPosAnt = listaAnterior.length;
+
+    for (var i = 0; i<lastNC.arcos.length; i++){
+      var listaAins = listaAnterior.slice();
+      listaAins[lastPosAnt] = lastNC.arcos[i].destino;
+      insertarAbiertos(listaAins);
+    }
+    
+    for (var i = 0; i<listaAbiertos.length; i++){
+      var count = listaAbiertos[i].length;
+      var comp = listaAbiertos[i][count-1];
+      if (exiteEnCerrados(comp)){
+        listaAbiertos.splice(i,1);
+      }
+    }
+
+    listaAbiertos.sort(compare);
+    imprimirCerrados();
+    imprimirAbiertos();
+    var ultA = ultimoListaAbiertos();
+
+    for (var i = 0; i<listaAbiertos.length; i++){
+      var count = listaAbiertos[i].length;
+      var comp = listaAbiertos[i][count-1];
+      if (exiteEnCerrados(comp)){
+        listaAbiertos.splice(i,1);
+      }
+    }
+    
+    while (exiteEnCerrados(ultA.nombre)){
+      document.write("enta");
+      listaAbiertos.splice(0,1);
+      ultA = ultimoListaAbiertos();
+    }
+
+    insertarCerrados(ultA);
+    listaAnterior = listaAbiertos[0];
+    if(ultA.nombre == goal){
+      return listaAbiertos[0];
+    }
+    listaAbiertos.splice(0,1);
+  }
+}
+
+function imprimirCostoUni(lista){
+  if (lista==null){
+    return;
+  }
+  for (var i = 0; i < lista.length; i++) {
+    document.write(lista[i].nombre + ",");
+  }
+  document.write("<br>");
+}
+
+
+insercionAutomaticaNodos(20);
 /*insertarNodo("A");
 insertarNodo("B");
 insertarNodo("C");
@@ -417,10 +579,12 @@ imprimirNodos();
 
 //imprimirStack( dfs("A","H"));
 
-imprimirStack( dlimiteds("A","H",10));
+//imprimirStack( dlimiteds("A","H",10));
+imprimirCostoUni(costoUniforme("A","H"));
+
+
+
 /*
-
-
 /*function insertarNodoCerrados(lista){
   var pos = cerrados.length;
   cerrados[pos] = lista;
