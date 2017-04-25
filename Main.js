@@ -138,7 +138,7 @@ function elimnarNodo(nombre){
 
 function insercionAutomaticaNodos(cantidad){
   //creacion de nodos
-  
+  nodos = new Array();
   var contadores = new Array();
   contadores[0]=0;
 
@@ -208,6 +208,9 @@ function imprimirNodos(){
 }
 
 function imprimirStack(stack){
+  if (stack==null){
+    return;
+  }
   stack.reverse();
   while(stack.length>0){
     document.write(stack.pop().nombre+",")
@@ -305,79 +308,88 @@ INSERTAR AQUI TODAS LAS FUNCIONES DE BUSQUEDA A IMPLEMENTAR
 */
 
 
-function DFS(nodoInicial,nodoFinal){
-  var nodoI = buscar(nodoInicial);
-  var nodoF = buscar(nodoFinal);
-  if ((nodoI == null) || (nodoF == null)){
-    document.write("Error: -> No existe alguno de los nodos");
+
+
+function dfs( rais, goal ){
+  var node;
+  var to;
+  var stack = [];
+  var Nroot = buscar(rais);
+  var NodoM = buscar(goal);
+  if (Nroot == null || NodoM == null){
+    document.write("Error1");
     return;
   }
-
-  var Stack = [];
-  Stack.push(nodoI);
-  var nodoAnt=nodoI;
-  nodoI.visitado=true;
-  var primerDo = true
-
-  while(true){
-    var nodoActual = Stack.pop();
-
-    if (nodoActual == null){
-      document.write("Error: -> No se encontro un resultado");
-      return null;
-    }
-    Stack.push(nodoActual);
-
-
-    if (nodoActual.nombre == nodoF.nombre){
-      return Stack;
-    }
-    if ((nodoActual.nombre == nodoI.nombre) && (primerDo == false)) {
-      document.write("Error: -> No se encontro un resultado");
-      return null;
-    }
+  Nroot.visitado=true;
+  stack.push(Nroot);
+  while (true) {
     
-
-    var i = 0;
-    for(i; i<nodoActual.arcos.length; i++){
-      if (nodoActual.arcos[i].destino.visitado == false ){
-        nodoActual.arcos[i].destino.visitado = true;
-        Stack.push(nodoActual.arcos[i].destino);
-        nodoAnt = nodoActual;
-        break;
+    var node = stack.pop();
+    stack.push(node);
+    document.write(stack.length+" ");
+    if (node.nombre == NodoM.nombre){
+     break;
+    }
+    var Nmetio = true;
+    for (var i = 0 ; i <node.arcos.length ; i++) {
+      if (node.arcos[i].destino.visitado ==  false) {
+        node.arcos[i].destino.visitado = true;
+        stack.push(node.arcos[i].destino);
+        Nmetio = false;
       }
     }
-    if(i>=nodoActual.arcos.length){
-      Stack.pop();
-      var ant2 = Stack.pop();
-      Stack.push(ant2);
-      Stack.push(nodoAnt);
-      nodoAnt = ant2;
+    if (Nmetio){
+      stack.pop();
     }
-    primerDo=false;
   }
-
+  return stack;
 }
 
-
-function DFS(nodoInicial,nodoFinal){
-  var nodoI = buscar(nodoInicial);
-  var nodoF = buscar(nodoFinal);
-  if ((nodoI == null) || (nodoF == null)){
-    document.write("Error: -> No existe alguno de los nodos");
+function dlimiteds( rais, goal,limitacion){
+  var node;
+  var to;
+  var stack = [];
+  var Nroot = buscar(rais);
+  var NodoM = buscar(goal);
+  if (Nroot == null || NodoM == null){
+    document.write("Error1");
     return;
   }
 
-  var Stack = [];
-  Stack.push(nodoI);
-  var nodoAnt=nodoI;
-  nodoI.visitado=true;
+  Nroot.visitado=true;
+  stack.push(Nroot);
 
-  while(true){
+  while (true) {
     
-  }
-}
+    var node = stack.pop();
 
+    if (node == null){
+      document.write("No se pudo encontrar <br>");
+      return null;
+    }
+
+    stack.push(node);
+
+    if (node.nombre == NodoM.nombre){
+     break;
+    }
+    var Nmetio = true;
+    
+    if(stack.length<limitacion-1){
+      for (var i = 0 ; i <node.arcos.length ; i++) {
+        if (node.arcos[i].destino.visitado ==  false) {
+          node.arcos[i].destino.visitado = true;
+          stack.push(node.arcos[i].destino);
+          Nmetio = false;
+        }
+      }
+    }
+    if (Nmetio){
+      stack.pop();
+    }
+  }
+  return stack;
+}
 
 
 
@@ -399,11 +411,13 @@ document.write(nodos.length);
 //imprimirStack(DFS("A","B"));
 
 //downloadFile("archivoJsonNodos.json",exportJson());
-importJson(exportJson());
+//importJson(exportJson());
 imprimirNodos();
 //readTextFile();
 
+//imprimirStack( dfs("A","H"));
 
+imprimirStack( dlimiteds("A","H",10));
 /*
 
 
