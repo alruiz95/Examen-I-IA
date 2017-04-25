@@ -702,3 +702,7 @@ function costo(nodoInicial, nodoFinal){
   }
   
 }  */
+
+function bfs(nodoInicial,nodoFinal){
+  
+}
