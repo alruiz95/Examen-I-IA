@@ -330,7 +330,7 @@ function BFS(nodoInicial, nodoFinal){
       var pos = abiertos.length;
 
       var arcDestino = buscarH(listaActual);
-      var sumatoria = ((listaActual.costo)+(arcDestino.costo);
+      var sumatoria = ((listaActual.costo)+(arcDestino.costo));
       listaActual = listaActual + arcDestino.nombre;
       abiertos[pos] = (listaActual + sumatoria) ;
       abiertos[sumatoria].sort();
