@@ -1,5 +1,6 @@
 'use strict';
 
+
 var nodos = new Array();
 var letrasInsertar = new Array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
 //Estructura
@@ -74,7 +75,7 @@ function insertarArco(peso, origen,destino){
   }
 
   if (existeArco(origen,destino)){
-    document.write("Error de Insercion de Arco:"+origen+" a "+destino+" -> Ya existe.");
+    document.write("Error de Insercion de Arco:"+origen+" a "+destino+" -> Ya existe. <br>");
     return false;
   }
 
@@ -108,9 +109,30 @@ function cambiarCostoArco(origen, destino, costo){
   }
 }
 
-//Poner Estado Inicial
-//Poner Estado Final
-//Eliminar nodo
+function estadoInicial(nombre){
+  nodo = buscar(nombre);
+  nodo.estado = "I";
+}
+
+function estadoFinal(nombre){
+  nodo = buscar(nombre);
+  nodo.estado = "F";
+}
+
+function elimnarNodo(nombre){
+  for (var i = 0; i < nodos.length; i++) {
+    for (var x = 0; x < nodos[i].arcos.length; x++) {
+      if(nodos[i].arcos[x].destino.nombre == nombre){
+          nodos[i].arcos.splice(x, 1);
+      }
+    }
+  }
+  for (var i = 0; i < nodos.length; i++) {
+    if (nodos[i].nombre == nombre){
+      nodos.splice(i, 1);
+    }
+  }
+}
 
 
 
@@ -193,6 +215,69 @@ function imprimirStack(stack){
   document.write("<br>");
 }
 
+function downloadFile(filename, dataValue) {
+
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(dataValue));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+
+}
+
+function readTextFile(filepath) {
+  var str = "";
+  var txtFile = new File(filepath);
+  txtFile.open("r");
+  while (!txtFile.eof) {
+    // read each line of text
+    str += txtFile.readln() + "\n";
+  }
+  return str;
+}
+
+function exportJson(){
+  var exportar = "{ \n \"nodos\":[ \n";
+  var i;
+  for (i = 0; i < nodos.length-1; i++) {
+    var est;
+    if (nodos[i].estado == null) {
+      est = "null";
+    }else{
+      est = nodos[i].estado;
+    }
+    exportar += "{ \n \"nombre\":\""+nodos[i].nombre+"\",\n \"estado\":\""+est+"\" ,\n \"arcos\":[\n";
+    var x;
+    for ( x = 0; x < nodos[i].arcos.length-1; x++) {
+      exportar += "{\n\"costo\":\""+nodos[i].arcos[x].costo+"\",\n \"destino\":\""+nodos[i].arcos[x].destino.nombre+"\" \n},\n";
+    }
+    exportar += "{\n\"costo\":\""+nodos[i].arcos[nodos[i].arcos.length-1].costo+"\",\n \"destino\":\""+nodos[i].arcos[nodos[i].arcos.length-1].destino.nombre+"\"\n}\n";
+    exportar +="]},";
+  }
+  var lN = nodos.length-1
+  var est;
+  if (nodos[lN].estado == null) {
+    est = "null";
+  }else{
+    est = nodos[lN].estado;
+  }
+  exportar += "{\"nombre\":\""+nodos[lN].nombre+"\", \"estado\":\""+est+"\", \"arcos\":[";
+   var x;
+    for ( x = 0; x < nodos[lN].arcos.length-1; x++) {
+      exportar += "{\n\"costo\":\""+nodos[lN].arcos[x].costo+"\",\n \"destino\":\""+nodos[lN].arcos[x].destino.nombre+"\" \n},\n";
+    }
+    exportar += "{\n\"costo\":\""+nodos[lN].arcos[nodos[lN].arcos.length-1].costo+"\",\n \"destino\":\""+nodos[lN].arcos[nodos[lN].arcos.length-1].destino.nombre+"\"\n}\n";
+    
+  exportar += "]}]}";
+
+
+  downloadFile("archivoJsonNodos.json",exportar);
+}
 
 //Busqueda en Grafos
 
@@ -257,6 +342,24 @@ function DFS(nodoInicial,nodoFinal){
 }
 
 
+function DFS(nodoInicial,nodoFinal){
+  var nodoI = buscar(nodoInicial);
+  var nodoF = buscar(nodoFinal);
+  if ((nodoI == null) || (nodoF == null)){
+    document.write("Error: -> No existe alguno de los nodos");
+    return;
+  }
+
+  var Stack = [];
+  Stack.push(nodoI);
+  var nodoAnt=nodoI;
+  nodoI.visitado=true;
+
+  while(true){
+    
+  }
+}
+
 
 
 
@@ -275,8 +378,9 @@ imprimirNodos();
 //insertarNodoAbiertos("A");
 
 document.write(nodos.length);
-imprimirStack(DFS("A","J"));
+//imprimirStack(DFS("A","B"));
 
+exportJson();
 
 
 /*
