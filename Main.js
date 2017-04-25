@@ -230,16 +230,20 @@ function downloadFile(filename, dataValue) {
 
 }
 
-function readTextFile(filepath) {
-  var str = "";
-  var txtFile = new File(filepath);
-  txtFile.open("r");
-  while (!txtFile.eof) {
-    // read each line of text
-    str += txtFile.readln() + "\n";
-  }
-  return str;
+function readTextFile() {
+  /*document.write("<input id=\"uploadText\" style=\"width:120px\" type=\"file\" size=\"10\"  onchange=\"PreviewText();\" />");
+
+
+     function PreviewText() {
+            var oFReader = new FileReader();
+            oFReader.readAsDataURL(document.getElementById("uploadText").files[0]);
+            oFReader.onload = function (oFREvent) {
+                return = oFREvent.target.result;
+            };
+        };
+  */
 }
+
 
 function exportJson(){
   var exportar = "{ \n \"nodos\":[ \n";
@@ -276,7 +280,21 @@ function exportJson(){
   exportar += "]}]}";
 
 
-  downloadFile("archivoJsonNodos.json",exportar);
+  return exportar;
+}
+
+function importJson(string){
+  nodos = new Array();
+  var obj = JSON.parse(string);
+  for (var i = 0; i < obj.nodos.length; i++) {
+    insertarNodo(obj.nodos[i].nombre);
+    nodos[i].estado = obj.nodos[i].estado;
+  }
+  for (var i = 0;i<nodos.length;i++){
+    for (var x = 0; x < obj.nodos[i].arcos.length; x++) {
+      insertarArco(obj.nodos[i].arcos[x].costo , obj.nodos[i].nombre , obj.nodos[i].arcos[x].destino);
+    }
+  }
 }
 
 //Busqueda en Grafos
@@ -373,14 +391,17 @@ insertarNodo("D");
 imprimirNodos();
 //cambiarNombreNodo("A","Cambio");
 cambiarCostoArco("C","A",20);*/
-imprimirNodos();
+
 
 //insertarNodoAbiertos("A");
 
 document.write(nodos.length);
 //imprimirStack(DFS("A","B"));
 
-exportJson();
+//downloadFile("archivoJsonNodos.json",exportJson());
+importJson(exportJson());
+imprimirNodos();
+//readTextFile();
 
 
 /*

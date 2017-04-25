@@ -1,0 +1,311 @@
+{ 
+ "nodos":[ 
+{ 
+ "nombre":"A",
+ "estado":"null" ,
+ "arcos":[
+{
+"costo":"429",
+ "destino":"B" 
+},
+{
+"costo":"278",
+ "destino":"I" 
+},
+{
+"costo":"82",
+ "destino":"H" 
+},
+{
+"costo":"101",
+ "destino":"C" 
+},
+{
+"costo":"402",
+ "destino":"D" 
+},
+{
+"costo":"471",
+ "destino":"J"
+}
+]},{ 
+ "nombre":"B",
+ "estado":"null" ,
+ "arcos":[
+{
+"costo":"114",
+ "destino":"D" 
+},
+{
+"costo":"324",
+ "destino":"J" 
+},
+{
+"costo":"109",
+ "destino":"E" 
+},
+{
+"costo":"162",
+ "destino":"I" 
+},
+{
+"costo":"190",
+ "destino":"H" 
+},
+{
+"costo":"434",
+ "destino":"F" 
+},
+{
+"costo":"20",
+ "destino":"G" 
+},
+{
+"costo":"115",
+ "destino":"C"
+}
+]},{ 
+ "nombre":"C",
+ "estado":"null" ,
+ "arcos":[
+{
+"costo":"113",
+ "destino":"A" 
+},
+{
+"costo":"420",
+ "destino":"B" 
+},
+{
+"costo":"337",
+ "destino":"F" 
+},
+{
+"costo":"90",
+ "destino":"E" 
+},
+{
+"costo":"93",
+ "destino":"H"
+}
+]},{ 
+ "nombre":"D",
+ "estado":"null" ,
+ "arcos":[
+{
+"costo":"107",
+ "destino":"I" 
+},
+{
+"costo":"3",
+ "destino":"H" 
+},
+{
+"costo":"466",
+ "destino":"A" 
+},
+{
+"costo":"6",
+ "destino":"C" 
+},
+{
+"costo":"365",
+ "destino":"B" 
+},
+{
+"costo":"79",
+ "destino":"F" 
+},
+{
+"costo":"428",
+ "destino":"E"
+}
+]},{ 
+ "nombre":"E",
+ "estado":"null" ,
+ "arcos":[
+{
+"costo":"456",
+ "destino":"I" 
+},
+{
+"costo":"234",
+ "destino":"A" 
+},
+{
+"costo":"401",
+ "destino":"C" 
+},
+{
+"costo":"128",
+ "destino":"G" 
+},
+{
+"costo":"18",
+ "destino":"D" 
+},
+{
+"costo":"348",
+ "destino":"J" 
+},
+{
+"costo":"133",
+ "destino":"B" 
+},
+{
+"costo":"218",
+ "destino":"H"
+}
+]},{ 
+ "nombre":"F",
+ "estado":"null" ,
+ "arcos":[
+{
+"costo":"136",
+ "destino":"C" 
+},
+{
+"costo":"96",
+ "destino":"J" 
+},
+{
+"costo":"185",
+ "destino":"G" 
+},
+{
+"costo":"486",
+ "destino":"A" 
+},
+{
+"costo":"320",
+ "destino":"E"
+}
+]},{ 
+ "nombre":"G",
+ "estado":"null" ,
+ "arcos":[
+{
+"costo":"299",
+ "destino":"D" 
+},
+{
+"costo":"323",
+ "destino":"B" 
+},
+{
+"costo":"227",
+ "destino":"J" 
+},
+{
+"costo":"10",
+ "destino":"E" 
+},
+{
+"costo":"338",
+ "destino":"A" 
+},
+{
+"costo":"19",
+ "destino":"I" 
+},
+{
+"costo":"348",
+ "destino":"F" 
+},
+{
+"costo":"248",
+ "destino":"C"
+}
+]},{ 
+ "nombre":"H",
+ "estado":"null" ,
+ "arcos":[
+{
+"costo":"315",
+ "destino":"F" 
+},
+{
+"costo":"215",
+ "destino":"B" 
+},
+{
+"costo":"403",
+ "destino":"I" 
+},
+{
+"costo":"131",
+ "destino":"E" 
+},
+{
+"costo":"253",
+ "destino":"J" 
+},
+{
+"costo":"414",
+ "destino":"A"
+}
+]},{ 
+ "nombre":"I",
+ "estado":"null" ,
+ "arcos":[
+{
+"costo":"155",
+ "destino":"J" 
+},
+{
+"costo":"345",
+ "destino":"D" 
+},
+{
+"costo":"224",
+ "destino":"B" 
+},
+{
+"costo":"474",
+ "destino":"E" 
+},
+{
+"costo":"169",
+ "destino":"C" 
+},
+{
+"costo":"39",
+ "destino":"H" 
+},
+{
+"costo":"264",
+ "destino":"G"
+}
+]},{"nombre":"J", "estado":"null", "arcos":[{
+"costo":"346",
+ "destino":"A" 
+},
+{
+"costo":"159",
+ "destino":"D" 
+},
+{
+"costo":"385",
+ "destino":"G" 
+},
+{
+"costo":"41",
+ "destino":"F" 
+},
+{
+"costo":"246",
+ "destino":"C" 
+},
+{
+"costo":"188",
+ "destino":"B" 
+},
+{
+"costo":"486",
+ "destino":"I" 
+},
+{
+"costo":"76",
+ "destino":"E"
+}
+]}]}
